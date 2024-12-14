@@ -3,29 +3,55 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-
-import { Counter } from "../src/Counter.sol";
+import { WrappedEther } from "../src/WrappedEther.sol";
 
 abstract contract Base_Test is Test {
     ////////////////////////////////////////////////////////////////////////////
     // Actor
     ////////////////////////////////////////////////////////////////////////////
 
-    Account internal deployer;
+    Account internal alice;
+
+    Account internal bob;
 
     ////////////////////////////////////////////////////////////////////////////
     // Test Contracts
     ////////////////////////////////////////////////////////////////////////////
 
-    Counter internal instance_counter;
+    WrappedEther internal weth;
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Setup
+    ////////////////////////////////////////////////////////////////////////////
+
+    function setUp() public virtual {
+        // deploy contracts
+        weth = new WrappedEther();
+
+        // label
+        vm.label({ account: address(weth), newLabel: "WETH" });
+
+        // setup actors
+        alice = makeAccount("Alice");
+        bob = makeAccount("Bob");
+
+        // deal
+        vm.deal(alice.addr, 1000 ether);
+    }
 
     ////////////////////////////////////////////////////////////////////////////
     // Helper
     ////////////////////////////////////////////////////////////////////////////
 
-    modifier useDeployer() {
-        vm.startPrank(deployer.addr);
+    modifier prankAlice() {
+        vm.startPrank(alice.addr);
         _;
-        vm.stopPrank();
+        vm.stopPrank;
+    }
+
+    modifier prankBob() {
+        vm.startPrank(bob.addr);
+        _;
+        vm.stopPrank;
     }
 }
