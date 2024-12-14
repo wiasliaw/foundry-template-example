@@ -13,8 +13,8 @@ abstract contract Sepolia_Config is Base_Script {
     // setUp
     ////////////////////////////////////////////////////////////////////////////
 
+    /// @dev https://sepolia.etherscan.io/address/0x68607f1d532761c28bf2cf0c2830a4c1d6ab9273
     function setUp() public virtual {
-        // assume address(0x1234) is the Counter contract in sepolia
-        instance_counter = Counter(address(0x1234));
+        weth = WrappedEther(payable(address(0x68607f1d532761C28Bf2cF0c2830a4c1D6AB9273)));
     }
 }
