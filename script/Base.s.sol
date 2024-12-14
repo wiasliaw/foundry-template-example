@@ -16,10 +16,10 @@ abstract contract Base_Script is Script {
     Account internal operator;
 
     ////////////////////////////////////////////////////////////////////////////
-    // Test Contracts
+    // Target Contracts
     ////////////////////////////////////////////////////////////////////////////
 
-    Counter internal instance_counter;
+    WrappedEther internal weth;
 
     ////////////////////////////////////////////////////////////////////////////
     // Helper
@@ -40,24 +40,5 @@ abstract contract Base_Script is Script {
     modifier Fork(string memory str) {
         vm.createSelectFork(str);
         _;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-    // Atomic Functions
-    ////////////////////////////////////////////////////////////////////////////
-
-    function _deploy_counter() internal {
-        instance_counter = new Counter();
-        console.log("new counter: ", address(instance_counter));
-    }
-
-    function _operate_increment() internal {
-        instance_counter.increment();
-        console.log("counter's current number: ", instance_counter.number());
-    }
-
-    function _operate_setNumber(uint256 n) internal {
-        instance_counter.setNumber(n);
-        console.log("counter's current number: ", instance_counter.number());
     }
 }

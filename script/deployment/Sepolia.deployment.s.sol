@@ -9,6 +9,8 @@ contract SepoliaSystem is Base_Script {
     // Parameters
     ////////////////////////////////////////////////////////////////////////////
 
+    // declare argument for deployment here
+
     ////////////////////////////////////////////////////////////////////////////
     // setUp
     ////////////////////////////////////////////////////////////////////////////
@@ -24,11 +26,15 @@ contract SepoliaSystem is Base_Script {
     // script
     ////////////////////////////////////////////////////////////////////////////
 
+    /// @dev deployment
+    /// @dev `forge script ./script/deployment/Sepolia.deployment.s.sol --broadcast --verify`
     function run() external Fork("sepolia") Broadcast(deployer.key) {
-        _deploy_counter();
+        weth = new WrappedEther();
     }
 
+    /// @dev simulate deployment
+    /// @dev `forge script ./script/deployment/Sepolia.deployment.s.sol --sig "sim()"`
     function sim() external Fork("sepolia") Prank(deployer.addr) {
-        _deploy_counter();
+        weth = new WrappedEther();
     }
 }
